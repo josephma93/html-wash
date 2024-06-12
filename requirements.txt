@@ -1,0 +1,4 @@
+flask
+beautifulsoup4
+html5lib
+htmlmin
