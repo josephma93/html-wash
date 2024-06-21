@@ -28,4 +28,6 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: username/html-wash:latest
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/html-wash:latest
+          ${{ secrets.DOCKER_USERNAME }}/html-wash:${{ github.sha }}
