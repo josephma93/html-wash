@@ -46,65 +46,6 @@ additional configuration parameters along with a preset, the additional paramete
 preset values. This allows you to leverage the benefits of the preset while customizing or adjusting the parameters as
 needed.
 
-### Example Configuration Parameters
-
-Here are some example parameters to help you understand how to send these configurations via cURL:
-
-#### Example 1: Removing Specific Classes and IDs
-
-```bash
-curl -X POST http://127.0.0.1:1010/wash -d 'html=<div class="remove-me keep-me also-remove" id="delete-this keep-this">Content</div>' -d 'class_names=remove-me' -d 'class_names=also-remove' -d 'ids=delete-this'
-```
-
-**After:**
-
-```html
-<div class="keep-me" id="keep-this">Content</div>
-```
-
-#### Example 2: Removing Elements with Partial Class Names and Specific Attributes
-
-```bash
-curl -X POST http://127.0.0.1:1010/wash -d 'html=<div class="hidden-item keep-item partially-hidden">Content</div><input type="hidden"><input type="temp"><input type="text">' -d 'partial_class_names=hidden' -d 'partial_class_names=partially' -d 'attributes=type=hidden' -d 'attributes=type=temp'
-```
-
-**After:**
-
-```html
-<div class="keep-item">Content</div>
-<input type="text">
-```
-
-#### Example 3: Removing Classes with Specific Prefixes
-
-```bash
-curl -X POST http://127.0.0.1:1010/wash -d 'html=<div class="dc-item du-item other-item keep-item">Content</div>' -d 'class_prefixes=dc-' -d 'class_prefixes=du-'
-```
-
-**After:**
-
-```html
-<div class="other-item keep-item">Content</div>
-```
-
-#### Example 4: Using a Preset with Additional Customization
-
-```bash
-curl -X POST http://127.0.0.1:1010/wash -d 'html=<div class="gen-field custom-class another-custom keep-field">Content</div>' -d 'cleanup-preset=pub-w' -d 'class_names=custom-class' -d 'class_names=another-custom'
-```
-
-**After:**
-
-```html
-<div class="keep-field">Content</div>
-```
-
-### Note
-
-When using multiple configuration parameters, each parameter should be sent separately with the `-d` flag in cURL. The
-parameters will be applied in the order they are received, with any additional parameters overwriting the corresponding
-values in the preset if a preset is used.
-
 ## Pull and Run the Docker Image
 
 To use the pre-built Docker image from Docker Hub, follow these instructions:
@@ -141,7 +82,8 @@ Form Data:
 Example cURL command:
 
 ```bash
-curl -X POST http://127.0.0.1:1010/wash -d 'html=<figure><!-- This is a comment --><img src="image.jpg"><figcaption>An example image</figcaption></figure>'
+curl -X POST http://127.0.0.1:1010/wash \
+    -d 'html=<figure><!-- This is a comment --><img src="image.jpg"><figcaption>An example image</figcaption></figure>'
 ```
 
 ### Filter HTML for Markdown
@@ -158,7 +100,8 @@ Form Data:
 Example cURL command:
 
 ```bash
-curl -X POST http://127.0.0.1:1010/filter-markdown -d 'html=<figure><img src="image.jpg"><figcaption>An example image</figcaption></figure>'
+curl -X POST http://127.0.0.1:1010/filter-markdown \
+    -d 'html=<figure><img src="image.jpg"><figcaption>An example image</figcaption></figure>'
 ```
 
 ### Convert HTML to Markdown
@@ -178,7 +121,8 @@ the `markdownify` library with default configurations.
 Example cURL command:
 
 ```bash
-curl -X POST http://127.0.0.1:1010/markdownify -d 'html=<h1>Title</h1><p>Some content.</p>'
+curl -X POST http://127.0.0.1:1010/markdownify \
+    -d 'html=<h1>Title</h1><p>Some content.</p>'
 ```
 
 ### Clean HTML for Puppeteer
@@ -195,5 +139,6 @@ Form Data:
 Example cURL command:
 
 ```bash
-curl -X POST http://127.0.0.1:1010/wash-pptr -d 'html=<div id="content">Content to be cleaned</div>'
+curl -X POST http://127.0.0.1:1010/wash-pptr \
+    -d 'html=<div id="content">Content to be cleaned</div>'
 ```
